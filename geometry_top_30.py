@@ -15,13 +15,13 @@ st.set_page_config(
 top_30_geometry_df = (
     read_from_gsheets("Countries")
     .assign(**{
-        "Total POI": lambda df: df["Total POI"].astype(int),
+        "Total POI with Parking Lots": lambda df: df["Total POI with Parking Lots"].astype(int),
         "POI with polygons": lambda df: df["POI with polygons"].str.replace(",", "").astype(int),
         "Point-only POI": lambda df: df["Point-only POI"].str.replace(",", "").astype(int),
         "Polygon coverage": lambda df: ((df["Polygon coverage"].str.replace(",", "").astype(float)) * 100).astype(float)
     })
     .query('iso_country_code != "US"')
-    .rename(columns={"iso_country_code": "Country Code", "country": "Country"})
+    .rename(columns={"iso_country_code": "Country Code", "country": "Country", "Total POI with Parking Lots":"Total POI"})
     [["Country Code", "Country", "Total POI", "POI with polygons", "Point-only POI", "Polygon coverage"]]
     .head(30)
 )
