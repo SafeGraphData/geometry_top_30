@@ -21,6 +21,7 @@ top_30_geometry_df = (
         "Polygon coverage": lambda df: ((df["Polygon coverage"].str.replace(",", "").astype(float)) * 100).astype(float)
     })
     .query('iso_country_code != "US"')
+    .drop('Total POI', axis=1)
     .rename(columns={"iso_country_code": "Country Code", "country": "Country", "Total POI with Parking Lots":"Total POI"})
     [["Country Code", "Country", "Total POI", "POI with polygons", "Point-only POI", "Polygon coverage"]]
     .head(30)
